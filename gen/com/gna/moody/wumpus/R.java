@@ -11,8 +11,22 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int fire=0x7f020000;
+        public static final int gold=0x7f020001;
+        public static final int ic_action_search=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int move=0x7f020004;
+        public static final int playern=0x7f020005;
+        public static final int redo=0x7f020006;
+        public static final int redo1=0x7f020007;
+        public static final int roombase=0x7f020008;
+        public static final int roomblood=0x7f020009;
+        public static final int roombloodyaura=0x7f02000a;
+        public static final int roompit=0x7f02000b;
+        public static final int roomslime=0x7f02000c;
+        public static final int treasure=0x7f02000d;
+        public static final int treasures_pyramid=0x7f02000e;
+        public static final int wumpus=0x7f02000f;
     }
     public static final class id {
         public static final int menu_settings=0x7f070000;
