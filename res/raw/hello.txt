@@ -1,0 +1,5 @@
+The files inside /res/raw will
+be traded as raw files, 
+they will not be compiled. 
+They will be moved to application
+package as they are.
