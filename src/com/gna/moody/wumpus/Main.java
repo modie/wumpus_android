@@ -1,5 +1,8 @@
 package com.gna.moody.wumpus;
 
+import java.io.File;
+import java.io.InputStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class WumpusMain extends Activity 
+public class Main extends Activity 
 {
 
 	@Override
@@ -57,11 +60,23 @@ public class WumpusMain extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Intent openMapEdit = new Intent();
+				Intent openMapEdit = new Intent("android.intent.action.WorldEdit");
 				startActivity(openMapEdit);
 				
 			}
 		});
+		try
+		{
+			//TODO copy file from res/raw/hello.txt to /sdcard/map.txt
+			//TODO ReadFromFile at World should read from /sdcard/map.txt 
+			File myFile = new File("/sdcard/map.txt");
+			myFile.createNewFile();
+			InputStream inputStream = getResources().openRawResource(R.raw.hello);
+			
+		}catch(Exception e)
+		{
+			e.toString();
+		}
 	}
 	
 	

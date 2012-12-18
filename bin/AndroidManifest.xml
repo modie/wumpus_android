@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".WumpusMain"
+            android:name=".Main"
             android:label="@string/title_activity_wumpus" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +43,24 @@
             android:label="@string/title_activity_wumpus" >
             <intent-filter>
                 <action android:name="android.intent.action.TEXT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".WorldEdit"
+            android:label="@string/title_activity_wumpus" >
+            <intent-filter>
+                <action android:name="android.intent.action.WorldEdit" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MapEditor"
+            android:label="@string/title_activity_wumpus" >
+            <intent-filter>
+                <action android:name="android.intent.action.MapEditor" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

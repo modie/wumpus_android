@@ -1,0 +1,5 @@
+Edit options with a text 
+Will give 3 options for size 
+and i will ask where to put monster 
+pits depending on size 
+and treasure 

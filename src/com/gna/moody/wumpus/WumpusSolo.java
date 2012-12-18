@@ -10,11 +10,6 @@ import android.view.WindowManager;
 
 public class WumpusSolo extends Activity{
 	WumpusGame wg;
-	World w ;
-	int map[][];
-	Thread ourThread = null ;
-	Point p ,pnew;
-	Thread t ;
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -23,6 +18,7 @@ public class WumpusSolo extends Activity{
 		DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 		wg = new WumpusGame(this);
+		
 		setContentView(wg);
 		
 	}
@@ -32,4 +28,5 @@ public class WumpusSolo extends Activity{
 		super.onPause();
 		finish();
 	}
+	
 }

@@ -1,5 +1,6 @@
-The files inside /res/raw will
-be traded as raw files, 
-they will not be compiled. 
-They will be moved to application
-package as they are.
+size = 11
+pit 4 5
+pit 4 2 
+pit 7 2
+wumpus 6 5
+treasure 5 6

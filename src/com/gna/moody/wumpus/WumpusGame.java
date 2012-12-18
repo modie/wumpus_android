@@ -1,4 +1,5 @@
 package com.gna.moody.wumpus;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 import android.content.Context;
@@ -14,7 +15,7 @@ import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
- 
+//TODO wumpusGAME reading from text file :/
 public class WumpusGame extends View {
     private Cell[][] singlesquare = null;
     int x = 10;
@@ -30,6 +31,9 @@ public class WumpusGame extends View {
 	int looking_aristera = -1 ;
 	int looking_deksia = 1 ;
     private Paint paint;
+    //TODO write to file using Edit.java 
+    //search at web for "android read and write to file sd card"
+    int size ;
     private Paint paintforText ;
     World w ;
     Handler handler = new Handler() {
@@ -60,17 +64,35 @@ public class WumpusGame extends View {
             	break;
             case 5:
             	Toast.makeText(getContext(), "Haha fell into pit ", Toast.LENGTH_LONG).show();
-            	newWorld();
-            	w.setPlayerX(6);
-            	w.setPlayerY(0);
+            	try
+				{
+					newWorld(getContext());
+				} catch (FileNotFoundException e1)
+				{
+					e1.printStackTrace();
+				}
             	break;
             case 6:
             	Toast.makeText(getContext(), "Haha wumpus made love with ya", Toast.LENGTH_LONG).show();
-            	newWorld();
+            	try
+				{
+					newWorld(getContext());
+				} catch (FileNotFoundException e1)
+				{
+					
+					e1.printStackTrace();
+				}
             	break;
             case 7 : 
             	Toast.makeText(getContext(), "U FOUND TREASURE ", Toast.LENGTH_LONG).show();
-            	newWorld() ;
+            	try
+				{
+					newWorld(getContext());
+				} catch (FileNotFoundException e1)
+				{
+					
+					e1.printStackTrace();
+				}
             	break;
             case 10 :
             	try {
@@ -122,7 +144,20 @@ public class WumpusGame extends View {
         this.paintforText.setTextSize(40);
         l = this.getWidth();
         a = (this.getHeight()-250);
+       	
+        
         newWorld();
+       	try
+		{
+			newWorld(context);
+			System.out.println("CAMEEEEEEEEEEEEEEEEE");
+		} catch (FileNotFoundException e)
+		{
+			
+			e.printStackTrace();
+		}
+        
+        
         /*int yaw[] = {1,2};
 		int yaw1[]= {2,4};
         w = new World(4,5,yaw1,yaw,2,7);
@@ -151,9 +186,49 @@ public class WumpusGame extends View {
     }
 
 	
+	private void newWorld(Context context) throws FileNotFoundException
+	{
+		 w = new World(context);
+		 //World w1 = new World(w.getMonster_x(),w.getMonster_y(),w.getLakouves_x(),w.getLakouves_y(),
+		 //w.getLooking(),w.getSize(),w.getTreasurex(),w.getTreasurey());
+		 //(int mx , int my , int lkx[],int lky[],int looking,int size,int treasurex,int treasurey)
+		 x = w.getSize();
+	     y = w.getSize();
+	     singlesquare = new Cell[x][y];
+	 
+	     xss = (int)(l / x);
+	     yss = (int)(a / y);
+	        
+	     for (int z = 0; z < y; z++) {
+	         for (int i = 0; i < x; i++) {
+	            singlesquare[z][i] = new WumpusEmpty(xss * i, z * yss);
+	         }
+	     }
+	     setWorld(w) ;
+	     System.out.println("Came here but....");
+		
+	}
+	public void newWorld(World w)
+	{
+		 x = w.getSize();
+	     y = w.getSize();
+	     singlesquare = new Cell[x][y];
+	 
+	     xss = (int)(l / x);
+	     yss = (int)(a / y);
+	        
+	     for (int z = 0; z < y; z++) {
+	         for (int i = 0; i < x; i++) {
+	            singlesquare[z][i] = new WumpusEmpty(xss * i, z * yss);
+	         }
+	     }
+	     setWorld(w) ;
+		
+	}
 	public void newWorld()
 	{
-		//TODO add back wumpus and treasure :D
+		
+		
 		int yaw[] = {2,3,4};//x
 		int yaw1[]= {4,2,0};//y
         w = new World(4,6,yaw,yaw1,2,7 , 6 , 6);
@@ -179,6 +254,10 @@ public class WumpusGame extends View {
 	}
 	public int[][] getMap(){
 		return map;
+	}
+	public void setMap(int map[][])
+	{
+		this.map = map ;
 	}
 	@Override
     protected void onDraw(Canvas canvas) {
@@ -259,9 +338,11 @@ public class WumpusGame extends View {
 				
 			}
 			singlesquare[w.getPlayerX()][w.getPlayerY()]= new WumpusHuman(w.getPlayerX()*xss , yss*w.getPlayerY(),w.getLooking(),whatWasBeforeLanding(player_pos_x, player_pos_y));
+			
 	}
 	
 	}
+	
  
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -579,14 +660,6 @@ public class WumpusGame extends View {
     		move();
     	}
     }
- 
-    
- 
-   
- 
-    //TODO
-    
-    //TODO shadows reveal[x][y] (OR MAYBE NOT ?) SURE NOT :D
    
  
     

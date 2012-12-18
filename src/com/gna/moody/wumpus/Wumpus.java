@@ -17,7 +17,6 @@ public class Wumpus extends Activity{
 	Point p ,pnew;
 	Thread t ;
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -30,12 +29,13 @@ public class Wumpus extends Activity{
 		p = new Point();
 		map =wg.getMap() ;
 		w = wg.getWorld();
-		wa = new WumpusAgent(7);
+		//TODO fix agents size 
+		wa = new WumpusAgent(11);
 		t= new Thread(){
 			public void run(){
 				while(true){
 					try{
-						//TODO
+						
 						//this is where i call ai
 						//maybe something like WumpusAgent(wg); :D
 						//wg.makeMove();
@@ -92,7 +92,7 @@ public class Wumpus extends Activity{
 						else
 						{
 							Log.e("wtf","trully a wtf moment");
-							//TODO see for maybepits,and make a method that will eliminate maybepits 
+							
 						}
 						wa.setLocation(pnew);
 						wa.initializeVars();
@@ -113,7 +113,7 @@ public class Wumpus extends Activity{
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
+		
 		super.onPause();
 		finish();
 	}
