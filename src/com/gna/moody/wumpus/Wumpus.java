@@ -29,11 +29,11 @@ public class Wumpus extends Activity{
 		p = new Point();
 		map =wg.getMap() ;
 		w = wg.getWorld();
-		
+		WumpusGame.needsToStop = false ;
 		wa = new WumpusAgent(w.getSize());
 		t= new Thread(){
 			public void run(){
-				while(true){
+				while(!WumpusGame.needsToStop){
 					try{
 						
 						//this is where i call ai
@@ -156,8 +156,11 @@ public class Wumpus extends Activity{
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onPause() {
-		
+		System.exit(0);
 		super.onPause();
-		finish();
+		
+		
 	}
+	
+	
 }

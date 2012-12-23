@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,6 +13,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class WumpusGame extends View {
     private int l;
     private int a;
     int map[][];
+    Intent openWumpus ;
     Cell arxiko ;
     int xss ;
     int yss ;
@@ -30,6 +33,8 @@ public class WumpusGame extends View {
 	int looking_down = 0 ;
 	int looking_aristera = -1 ;
 	int looking_deksia = 1 ;
+	static boolean needsToStop = false ;
+	static int counter_pits , counter_wumpus, counter_wumpus_killed,counter_treasure;
     private Paint paint;
     int size ;
     private Paint paintforText ;
@@ -53,10 +58,6 @@ public class WumpusGame extends View {
                 Toast.makeText(getContext(), "Treasure Found-Win", Toast.LENGTH_LONG).show();
                 break;
             case 4:
-            	Toast.makeText(getContext(), "Yaw since u are not columbus", Toast.LENGTH_SHORT).show();
-            	Toast.makeText(getContext(), "there is nothing there", Toast.LENGTH_SHORT).show();
-            	Toast.makeText(getContext(), "U MAD ?", Toast.LENGTH_SHORT).show();
-            	Toast.makeText(getContext(), "SOOOOOOOOOO MAD", Toast.LENGTH_SHORT).show();
             	
             	//there is nothing there
             	break;
@@ -69,9 +70,15 @@ public class WumpusGame extends View {
 				{
 					e1.printStackTrace();
 				}
+            	//TODO make new Activities 
+            	counter_pits ++ ;
+            	openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
+				getContext().startActivity(openWumpus);
+				needsToStop = true ;
             	break;
             case 6:
             	Toast.makeText(getContext(), "Haha wumpus made love with ya", Toast.LENGTH_LONG).show();
+            	counter_wumpus ++ ;
             	try
 				{
 					newWorld(getContext());
@@ -80,17 +87,25 @@ public class WumpusGame extends View {
 					
 					e1.printStackTrace();
 				}
+            	needsToStop = true ;
+            	openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
+				getContext().startActivity(openWumpus);
             	break;
             case 7 : 
             	Toast.makeText(getContext(), "U FOUND TREASURE ", Toast.LENGTH_LONG).show();
+            	counter_treasure ++ ;
             	try
 				{
 					newWorld(getContext());
+					
 				} catch (FileNotFoundException e1)
 				{
 					
 					e1.printStackTrace();
 				}
+            	needsToStop = true ;
+            	openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
+				getContext().startActivity(openWumpus);
             	break;
             case 10 :
             	try {
@@ -658,6 +673,16 @@ public class WumpusGame extends View {
     		move();
     	}
     }
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        needsToStop = true ;
+	    }
+		System.exit(0);
+		return super.onKeyDown(keyCode, event);
+	}
+    
    
  
     
