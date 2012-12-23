@@ -15,7 +15,7 @@ import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-//TODO wumpusGAME reading from text file :/
+
 public class WumpusGame extends View {
     private Cell[][] singlesquare = null;
     int x = 10;
@@ -31,8 +31,6 @@ public class WumpusGame extends View {
 	int looking_aristera = -1 ;
 	int looking_deksia = 1 ;
     private Paint paint;
-    //TODO write to file using Edit.java 
-    //search at web for "android read and write to file sd card"
     int size ;
     private Paint paintforText ;
     World w ;

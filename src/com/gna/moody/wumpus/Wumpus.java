@@ -29,7 +29,7 @@ public class Wumpus extends Activity{
 		p = new Point();
 		map =wg.getMap() ;
 		w = wg.getWorld();
-		//TODO fix agents size 
+		
 		wa = new WumpusAgent(w.getSize());
 		t= new Thread(){
 			public void run(){
@@ -91,8 +91,51 @@ public class Wumpus extends Activity{
 						}
 						else
 						{
-							Log.e("wtf","trully a wtf moment");
 							
+							
+							WumpusRoom up ,down,left,right;
+							up=down=left=right=null ;
+							if(p.x-1 >= 0)
+							{
+								up = wa.getRoom(p.x-1, p.y);
+							}
+							if(p.x + 1 < w.getSize())
+							{
+								down = wa.getRoom(p.x +1 ,p.y);
+							}
+							if(p.y + 1 < w.getSize())
+							{
+								right = wa.getRoom(p.x,p.y+1);
+							}
+							if(p.y - 1 >=0)
+							{
+								left = wa.getRoom(p.x, p.y-1);
+							}
+							
+							if(up!=null && !up.isPit())
+							{
+								wg.moveUp();
+								pnew = new Point(p.x-1,p.y);
+							}
+							else if(left!= null && (!left.isPit() ||!left.isMaybepit()||
+									!left.isWumpus()) )
+								//FIXME for Wumpus and maybePit 
+							{
+								wg.moveLeft();
+								pnew = new Point(p.x,p.y-1);
+							}
+							else if(right!=null && !right.isPit())
+							{
+								wg.moveRight();
+								pnew = new Point(p.x,p.y+1);
+							}
+							else if(down!=null && !down.isPit())
+							{
+								wg.moveDown();
+								pnew = new Point(p.x+1,p.y);
+							}
+							
+							Log.e("wtf","trully a wtf moment");
 						}
 						wa.setLocation(pnew);
 						wa.initializeVars();
@@ -100,7 +143,7 @@ public class Wumpus extends Activity{
 						
 						
 						
-						Thread.sleep(1500);
+						Thread.sleep(1000);
 					}catch(InterruptedException e){
 						
 					}

@@ -154,21 +154,21 @@ public class World {
 	}
 	public void EnterValues(){ 
 		//enter monster 
-		map[size - 1 -treasurex][treasurey] = 6 ;
-		map[size - 1 -monster_x][monster_y]= 3 ;
+		map[treasurex][treasurey] = 6 ;
+		map[monster_x][monster_y]= 3 ;
 		//enter values around monster S=1 
 		if(!((monster_x+1)>=size)){
-			map[size- 1 -monster_x+1][monster_y]=1 ;
+			map[monster_x+1][monster_y]=1 ;
 		}
 		if((monster_x-1 >= 0)){
-			map[size - 1 -monster_x-1][monster_y]=1 ;
+			map[monster_x-1][monster_y]=1 ;
 		}
 		if(monster_y-1 >= 0){
-			map[size - 1 -monster_x][monster_y-1]=1 ;
+			map[monster_x][monster_y-1]=1 ;
 		}
 		if(!((monster_y+1)>=size))
 		{
-			map[size- 1- monster_x][monster_y+1]=1 ;
+			map[monster_x][monster_y+1]=1 ;
 		}
 				//enter pits , L == 4;
 		//enter pits , L == 4;
@@ -179,13 +179,13 @@ public class World {
 				int lx = lakouves_x[i];
 				int ly = lakouves_y[i];
 				
-				map[size - 1 -lx][ly]=4 ;
+				map[lx][ly]=4 ;
 			}
 		}
 		for(int i = 0 ; i < lakouves_x.length ; i++)
 		{
 			if(lakouves_x[i]!=-1){
-				int lx = size- 1-lakouves_x[i];
+				int lx = lakouves_x[i];
 				int ly = lakouves_y[i];
 				if(!(lx+1>=size))
 				{
@@ -333,10 +333,6 @@ public class World {
 			lakouves_y[i] = -1 ;
 		}
 		
-	}
-	public static void WriteToFile()
-	{
-		//TODO add write to file 
 	}
 	
 }

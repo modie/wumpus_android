@@ -84,8 +84,7 @@ public class Main extends Activity
 		Scanner input = new Scanner(inputStream);
 		try
 		{
-			//TODO copy file from res/raw/hello.txt to /sdcard/map.txt
-			//TODO ReadFromFile at World should read from /sdcard/map.txt 
+			
 			Log.e("line", "0");
 			PrintStream ps = new PrintStream(myInternalFile);
 			String line = input.nextLine();

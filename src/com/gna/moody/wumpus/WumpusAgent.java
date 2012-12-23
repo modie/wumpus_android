@@ -70,6 +70,10 @@ public class WumpusAgent
 		r[location.x][location.y].setVisited(true);
 		
 	}
+	public WumpusRoom[][] getRooms()
+	{
+		return r ;
+	}
 	public void setRoom(int x,int y, int yaw)
 	{
 		if(yaw==1)
@@ -275,9 +279,7 @@ public class WumpusAgent
 		}
 		if(current.isAura())//checkin for pit 
 		{
-			//TODO check for sides and etc 
-			//maybe if i create a class that will hold 
-			//wumpuspits , and will tell,if maybepits are right or wrong 
+			
 			if(up!=null ){
 				if(upleft!=null){
 					if(upleft.isAura() && left.isVisited())
@@ -549,6 +551,10 @@ public class WumpusAgent
 	protected int possibleMoves()// = reason ,line 454 
 	{
 		WumpusRoom left, right ,up,down ;
+		couldright = -200 ;
+		couldup = -200 ;
+		coulddown = -200 ;
+		couldleft = -200 ;
 		left = getLeftRoom(location);
 		right = getRightRoom(location);
 		up = getUpRoom(location);
@@ -664,7 +670,9 @@ public class WumpusAgent
 	}
 	private int getMove( int right, int up, int left, int down )
 	{
-		//TODO add random  for movement if they are the same :D
+		/*TODO add random  for movement if they are the same :D
+		 * after tests are complete :D
+		 */
 		Random r = new Random();
 		int highest = Integer.MIN_VALUE;
 		if(right == up && up == left && down == left)
