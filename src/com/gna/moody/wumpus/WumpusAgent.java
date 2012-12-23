@@ -519,6 +519,29 @@ public class WumpusAgent
 					r[i][j].setMaybepit(false);
 					
 				}
+				if(r[i][j].isVisited() && !r[i][j].isAura())
+				{
+					if(i-1 >= 0)
+					{
+						r[i-1][j].setMaybepit(false);
+						r[i-1][j].setPit(false);
+					}
+					if(i+1< size)
+					{
+						r[i+1][j].setMaybepit(false);
+						r[i+1][j].setPit(false);
+					}
+					if(j-1 >= 0)
+					{
+						r[i][j-1].setMaybepit(false);
+						r[i][j-1].setPit(false);
+					}
+					if(j+1 < size)
+					{
+						r[i][j+1].setMaybepit(false);
+						r[i][j+1].setPit(false);
+					}
+				}
 			}
 		}
 		

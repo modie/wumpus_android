@@ -30,7 +30,7 @@ public class Wumpus extends Activity{
 		map =wg.getMap() ;
 		w = wg.getWorld();
 		//TODO fix agents size 
-		wa = new WumpusAgent(11);
+		wa = new WumpusAgent(w.getSize());
 		t= new Thread(){
 			public void run(){
 				while(true){
@@ -100,7 +100,7 @@ public class Wumpus extends Activity{
 						
 						
 						
-						Thread.sleep(1000);
+						Thread.sleep(1500);
 					}catch(InterruptedException e){
 						
 					}

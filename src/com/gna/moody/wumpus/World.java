@@ -1,11 +1,13 @@
 package com.gna.moody.wumpus;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 
 public class World {
 	int monster_x ;
@@ -263,9 +265,18 @@ public class World {
 	{
 		initializePits();
 		int counter = 0;
-		InputStream inputStream = context.getResources().openRawResource(R.raw.hello);
+		String filename = "map.txt";
+		String filepath = "Wympus";
+		File myInternalFile;
+		
+		ContextWrapper contextWrapper = new ContextWrapper(context.getApplicationContext());
+		File directory = contextWrapper.getDir(filepath, Context.MODE_PRIVATE);
+		myInternalFile = new File(directory , filename);
+		FileInputStream fis;
+		
 		try{
-			Scanner scanner = new Scanner(inputStream);
+			fis = new FileInputStream(myInternalFile);
+			Scanner scanner = new Scanner(fis);
 			
 			
 			while(scanner.hasNextLine()){

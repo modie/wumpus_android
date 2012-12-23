@@ -4,3 +4,4 @@ pit 4 2
 pit 7 2
 wumpus 6 5
 treasure 5 6
+end

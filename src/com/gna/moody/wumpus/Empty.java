@@ -33,7 +33,6 @@ public class Empty extends Cell {
 
 	@Override
 	public int Drawable() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

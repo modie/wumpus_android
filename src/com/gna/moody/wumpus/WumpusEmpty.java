@@ -34,7 +34,6 @@ public class WumpusEmpty extends Cell {
 
 	@Override
 	public int Drawable() {
-		// TODO Auto-generated method stub
 		return R.drawable.roombase ;
 	}
 }
