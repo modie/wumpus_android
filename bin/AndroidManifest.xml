@@ -22,7 +22,6 @@
         </activity>
         <activity
             android:name=".Wumpus"
-            android:noHistory="true"
             android:label="@string/title_activity_wumpus" >
             <intent-filter>
                 <action android:name="android.intent.action.WUMPUSAGENT" />

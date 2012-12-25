@@ -1,4 +1,4 @@
-size = 9
+size = 11
 pit 4 5
 pit 4 2 
 pit 7 2

@@ -7,13 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +38,18 @@ public class Text extends Activity {
 		Button btnSave = (Button)findViewById(R.id.btnSave);
 		Button btnClear = (Button)findViewById(R.id.btnClearScreen);
 		helloTxt.setText(readTxt());
+		Button btnStartAgent = (Button)findViewById(R.id.btnStartAgent);
+		btnStartAgent.setOnClickListener(new View.OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View arg0)
+			{
+				Intent openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
+				startActivity(openWumpus);
+				
+			}
+		});
 		btnSave.setOnClickListener( new View.OnClickListener()
 		{
 			

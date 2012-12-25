@@ -33,7 +33,7 @@ public class Wumpus extends Activity{
 		wa = new WumpusAgent(w.getSize());
 		t= new Thread(){
 			public void run(){
-				while(!WumpusGame.needsToStop){
+				while(true){
 					try{
 						
 						//this is where i call ai
@@ -156,7 +156,7 @@ public class Wumpus extends Activity{
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onPause() {
-		finish();
+		System.exit(0);
 		super.onPause();
 		
 		
