@@ -29,12 +29,6 @@ public class Main extends Activity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		TextView tvpits = (TextView)findViewById(R.id.tvPit);
-		tvpits.setText("Pits falled so far : "+WumpusGame.counter_pits);
-		TextView tvgold = (TextView)findViewById(R.id.tvGold);
-		tvgold.setText("Reached gold so far : "+WumpusGame.counter_treasure);
-		TextView tvwumpus = (TextView)findViewById(R.id.tvWumpus);
-		tvwumpus.setText("Eaten by wumpus so far : "+WumpusGame.counter_wumpus);
 		Button bt2 = (Button)findViewById(R.id.button2);
 		Button bt1 =(Button)findViewById(R.id.button1);
 		Button bt3 =(Button) findViewById(R.id.button3);

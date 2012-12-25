@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 public class WumpusSolo extends Activity{
 	WumpusGame wg;
+	//TODO maybe add shadows for solo player 
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
@@ -17,7 +18,7 @@ public class WumpusSolo extends Activity{
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-		wg = new WumpusGame(this);
+		wg = new WumpusGame(this,false);
 		
 		setContentView(wg);
 		

@@ -22,7 +22,7 @@ public class Wumpus extends Activity{
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-		wg = new WumpusGame(this);
+		wg = new WumpusGame(this,false);
 		setContentView(wg);
 		
 		pnew = new Point();
@@ -156,7 +156,7 @@ public class Wumpus extends Activity{
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onPause() {
-		System.exit(0);
+		finish();
 		super.onPause();
 		
 		

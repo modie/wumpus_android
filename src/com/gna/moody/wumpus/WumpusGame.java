@@ -63,22 +63,25 @@ public class WumpusGame extends View {
             	break;
             case 5:
             	Toast.makeText(getContext(), "Haha fell into pit ", Toast.LENGTH_LONG).show();
-            	try
+            	/*try
 				{
 					newWorld(getContext());
 				} catch (FileNotFoundException e1)
 				{
 					e1.printStackTrace();
 				}
-            	//TODO make new Activities 
+            	*/
             	counter_pits ++ ;
+            	/*
             	openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
 				getContext().startActivity(openWumpus);
+				*/
 				needsToStop = true ;
             	break;
             case 6:
             	Toast.makeText(getContext(), "Haha wumpus made love with ya", Toast.LENGTH_LONG).show();
             	counter_wumpus ++ ;
+            	/*
             	try
 				{
 					newWorld(getContext());
@@ -87,13 +90,17 @@ public class WumpusGame extends View {
 					
 					e1.printStackTrace();
 				}
+				*/
             	needsToStop = true ;
+            	/*
             	openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
 				getContext().startActivity(openWumpus);
+				*/
             	break;
             case 7 : 
             	Toast.makeText(getContext(), "U FOUND TREASURE ", Toast.LENGTH_LONG).show();
             	counter_treasure ++ ;
+            	/*
             	try
 				{
 					newWorld(getContext());
@@ -103,9 +110,12 @@ public class WumpusGame extends View {
 					
 					e1.printStackTrace();
 				}
+				*/
             	needsToStop = true ;
+            	/*
             	openWumpus = new Intent("android.intent.action.WUMPUSAGENT");
 				getContext().startActivity(openWumpus);
+				*/
             	break;
             case 10 :
             	try {
@@ -142,8 +152,7 @@ public class WumpusGame extends View {
     	Point p = new Point(w.getPlayerX(),w.getPlayerY());
     	return p ;
     }
- 
-    public WumpusGame(Context context) {
+    public WumpusGame(Context context,boolean isRandom) {
         super(context);
  
         paint = new Paint();
@@ -158,7 +167,7 @@ public class WumpusGame extends View {
         l = this.getWidth();
         a = (this.getHeight()-250);
        	
-        
+       
         newWorld();
        	try
 		{
@@ -169,6 +178,11 @@ public class WumpusGame extends View {
 			
 			e.printStackTrace();
 		}
+       	/*if(isRandom)
+       	{
+       		newWorld();
+       	}
+       	*/
         
         
         /*int yaw[] = {1,2};
@@ -240,7 +254,9 @@ public class WumpusGame extends View {
 	}
 	public void newWorld()
 	{
-		
+		/*
+		 * TODO add random pits,size,treasure,wumpus for ai
+		 */
 		
 		int yaw[] = {2,3,4};//x
 		int yaw1[]= {4,2,0};//y
@@ -673,7 +689,8 @@ public class WumpusGame extends View {
     		move();
     	}
     }
-	@Override
+	
+	/*
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -682,6 +699,7 @@ public class WumpusGame extends View {
 		System.exit(0);
 		return super.onKeyDown(keyCode, event);
 	}
+	*/
     
    
  

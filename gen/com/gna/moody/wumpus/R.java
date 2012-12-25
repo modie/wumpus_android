@@ -29,27 +29,24 @@ public final class R {
         public static final int wumpus=0x7f02000f;
     }
     public static final class id {
-        public static final int btLarge=0x7f080009;
-        public static final int btMedium=0x7f080008;
-        public static final int btSmall=0x7f080007;
-        public static final int btnClearScreen=0x7f08000d;
-        public static final int btnSave=0x7f08000c;
+        public static final int btLarge=0x7f080006;
+        public static final int btMedium=0x7f080005;
+        public static final int btSmall=0x7f080004;
+        public static final int btnClearScreen=0x7f08000a;
+        public static final int btnSave=0x7f080009;
         public static final int button1=0x7f080000;
         public static final int button2=0x7f080001;
         public static final int button3=0x7f080002;
         public static final int button4=0x7f080003;
-        public static final int getExternalStorage=0x7f080012;
-        public static final int getInternalStorage=0x7f080010;
-        public static final int menu_settings=0x7f080014;
-        public static final int myInputText=0x7f08000e;
-        public static final int responseText=0x7f080013;
-        public static final int saveExternalStorage=0x7f080011;
-        public static final int saveInternalStorage=0x7f08000f;
-        public static final int tvGold=0x7f080005;
-        public static final int tvPit=0x7f080004;
-        public static final int tvWumpus=0x7f080006;
-        public static final int txtData=0x7f08000b;
-        public static final int widget28=0x7f08000a;
+        public static final int getExternalStorage=0x7f08000f;
+        public static final int getInternalStorage=0x7f08000d;
+        public static final int menu_settings=0x7f080011;
+        public static final int myInputText=0x7f08000b;
+        public static final int responseText=0x7f080010;
+        public static final int saveExternalStorage=0x7f08000e;
+        public static final int saveInternalStorage=0x7f08000c;
+        public static final int txtData=0x7f080008;
+        public static final int widget28=0x7f080007;
     }
     public static final class layout {
         public static final int main=0x7f030000;
