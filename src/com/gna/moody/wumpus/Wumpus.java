@@ -39,7 +39,7 @@ public class Wumpus extends Activity{
 						//this is where i call ai
 						//maybe something like WumpusAgent(wg); :D
 						//wg.makeMove();
-						
+						//FIXME add values in order to shoot wumpus 
 						
 						//p = wg.makeMove();  // p wg.makeMove(wa.decide(p.x,p.y));
 						p = wa.getLocation() ;
@@ -85,9 +85,21 @@ public class Wumpus extends Activity{
 							wg.moveLeft();
 							pnew = new Point(p.x,p.y-1);
 						}
-						else if(wa.possibleMoves()==10)
+						else if(wa.possibleMoves()==10 )
 						{
-							Log.e("wtf", "wtf why is it 10 ?");
+							wg.shootDown();
+						}
+						else if(wa.possibleMoves()==11 )
+						{
+							wg.shootRight();
+						}
+						else if(wa.possibleMoves()==-11 )
+						{
+							wg.shootLeft();
+						}
+						else if(wa.possibleMoves()==12 )
+						{
+							wg.shootUp();
 						}
 						else
 						{
@@ -112,27 +124,46 @@ public class Wumpus extends Activity{
 								left = wa.getRoom(p.x, p.y-1);
 							}
 							
-							if(up!=null && !up.isPit())
+							if(up!=null && (!up.isPit() ||!up.isMaybepit()||
+									!up.isWumpus() || !up.isMaybewumpus()))
 							{
 								wg.moveUp();
 								pnew = new Point(p.x-1,p.y);
 							}
+							else if(up.isWumpus())
+							{
+								wg.shootUp();
+							}
 							else if(left!= null && (!left.isPit() ||!left.isMaybepit()||
-									!left.isWumpus()) )
+									!left.isWumpus() || !left.isMaybewumpus()) )
 								//FIXME for Wumpus and maybePit 
 							{
 								wg.moveLeft();
 								pnew = new Point(p.x,p.y-1);
 							}
-							else if(right!=null && !right.isPit())
+							else if(left.isWumpus())
+							{
+								wg.shootLeft();
+							}
+							else if(right!=null && (!right.isPit() ||!right.isMaybepit()||
+									!right.isWumpus() || !right.isMaybewumpus()))
 							{
 								wg.moveRight();
 								pnew = new Point(p.x,p.y+1);
 							}
-							else if(down!=null && !down.isPit())
+							else if(right.isWumpus())
+							{
+								wg.shootRight();
+							}
+							else if(down!=null && (!down.isPit() ||!down.isMaybepit()||
+									!down.isWumpus() || !down.isMaybewumpus()))
 							{
 								wg.moveDown();
 								pnew = new Point(p.x+1,p.y);
+							}
+							else if(down.isWumpus())
+							{
+								wg.shootDown();
 							}
 							
 							Log.e("wtf","trully a wtf moment");

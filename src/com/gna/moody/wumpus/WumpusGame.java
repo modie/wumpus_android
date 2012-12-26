@@ -13,6 +13,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +28,8 @@ public class WumpusGame extends View {
     int map[][];
     Intent openWumpus ;
     Cell arxiko ;
+    static boolean gotWumpus = true ;
+    static boolean gotArrow = true ;
     int xss ;
     int yss ;
     int looking_up = 2 ;
@@ -117,6 +120,12 @@ public class WumpusGame extends View {
 				getContext().startActivity(openWumpus);
 				*/
             	break;
+            case 8:
+            	Toast.makeText(getContext(), "Wumpus dead", Toast.LENGTH_SHORT).show();
+            	break;
+            case 9:
+            	Toast.makeText(getContext(), "Wumpus not dead", Toast.LENGTH_SHORT).show();
+            	break;
             case 10 :
             	try {
 					wait(1000);
@@ -124,6 +133,10 @@ public class WumpusGame extends View {
 					
 					e.printStackTrace();
 				}
+            	break;
+            case 11 :
+            	Toast.makeText(getContext(), "FIRE", Toast.LENGTH_SHORT).show();
+            	break;
             default:
                 break;
             }
@@ -294,6 +307,7 @@ public class WumpusGame extends View {
 		int max_height = this.getHeight()- 250 ;
         for (int i = 0; i < singlesquare.length; i++) {
             for (int j = 0; j < singlesquare[0].length; j++) {
+            	
                 singlesquare[i][j].draw(canvas, getResources(), j, i, (this
                         .getWidth() + 3)
                         / singlesquare.length, (max_height)
@@ -309,13 +323,16 @@ public class WumpusGame extends View {
         Bitmap new_rotate_left = Bitmap.createScaledBitmap(rotate_left, 120, 120, true);
         canvas.drawBitmap(new_rotate_left,0,max_height,paint);
         //button to move
+        Bitmap btnFire = BitmapFactory.decodeResource(getResources(), R.drawable.fire);
+        Bitmap newBtnFire = Bitmap.createScaledBitmap(btnFire, this.getWidth()-240, 120, true);
         Bitmap BtnMove = BitmapFactory.decodeResource(getResources(), R.drawable.move);
         Bitmap newBtnMove = Bitmap.createScaledBitmap(BtnMove, this.getWidth()-240, 120, true);
         canvas.drawBitmap(newBtnMove,120 , max_height , paint);
-        String s= " X = "+ w.getPlayerX() ;
-        String s1 = " Y = "+w.getPlayerY();
-        canvas.drawText(s, 120, 120, paintforText);
-        canvas.drawText(s1, 240, 120, paintforText);
+        canvas.drawBitmap(newBtnFire, 120, max_height+120, paint);
+        //String s= " X = "+ w.getPlayerX() ;
+        //String s1 = " Y = "+w.getPlayerY();
+        //canvas.drawText(s, 120, 120, paintforText);
+        //canvas.drawText(s1, 240, 120, paintforText);
         
         super.onDraw(canvas);
     }
@@ -377,8 +394,14 @@ public class WumpusGame extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int x_aux = (int) (event.getX());
         int y_aux = (int) (event.getY());
-        if(x_aux >=this.getWidth()-120 && event.getAction() == event.ACTION_UP){
-        rotateRight();
+        if(y_aux >= this.getHeight()-120 && x_aux >120 && x_aux < this.getWidth()-120 
+        		&& event.getAction()==event.ACTION_UP)
+        {
+        	shoot();
+        }
+        else if(x_aux >=this.getWidth()-120 && event.getAction() == event.ACTION_UP)
+        {
+        	rotateRight();
         }
         else if(x_aux <=120 && event.getAction() == event.ACTION_UP)
         {
@@ -391,9 +414,11 @@ public class WumpusGame extends View {
         
         
         
+        
         return true;
     }
-    public void rotateRight()
+    
+	public void rotateRight()
     {
     	int l = w.getLooking();
     	int lnew =-1;
@@ -469,7 +494,7 @@ public class WumpusGame extends View {
     				handler.sendMessage(Message.obtain(handler,5));
     				
     			}
-    			else if(w.getId(xprev-1, yprev) ==3)
+    			else if(w.getId(xprev-1, yprev) ==3 &&gotWumpus)
     			{
     				handler.sendMessage(Message.obtain(handler,6));
     			}
@@ -497,7 +522,7 @@ public class WumpusGame extends View {
     				handler.sendMessage(Message.obtain(handler,5));
     				
     			}
-    			else if( w.getId(xnew, yprev+1) ==3)
+    			else if( w.getId(xnew, yprev+1) ==3 &&gotWumpus)
     			{
     				handler.sendMessage(Message.obtain(handler,6));
     			}
@@ -521,7 +546,7 @@ public class WumpusGame extends View {
     				handler.sendMessage(Message.obtain(handler,5));
     				
     			}
-    			else if(w.getId(xprev+1, yprev) ==3 )
+    			else if(w.getId(xprev+1, yprev) ==3 &&gotWumpus)
     			{
     				handler.sendMessage(Message.obtain(handler,6));
     			}
@@ -548,7 +573,7 @@ public class WumpusGame extends View {
     			{
     				handler.sendMessage(Message.obtain(handler,5));
     			}
-    			else if(w.getId(xprev, yprev-1) ==3 )
+    			else if(w.getId(xprev, yprev-1) ==3 &&gotWumpus)
     			{
     				handler.sendMessage(Message.obtain(handler,6));
     			}
@@ -575,9 +600,13 @@ public class WumpusGame extends View {
 		{
 			singlesquare[xprev][yprev]= new WumpusAura(xprev*xss , yss*yprev);
 		}
-		else if(oldmap[xprev][yprev]==3)
+		else if(oldmap[xprev][yprev]==3 && gotWumpus)
 		{
 			singlesquare[xprev][yprev]= new WumpusMonster(xprev*xss , yss*yprev);
+		}
+		else if(oldmap[xprev][yprev]==3 && !gotWumpus)
+		{
+			singlesquare[xprev][yprev] = new WumpusEmpty(xprev*xss, yprev*yss);
 		}
 		else if(oldmap[xprev][yprev]==4)
 		{
@@ -597,10 +626,94 @@ public class WumpusGame extends View {
     	
     	handler.sendMessage(Message.obtain(handler, 0));
     }
-    public int whatWasBeforeLanding(int x,int y){
+    private void shoot()
+	{
+    	int l = w.getLooking();
+    	int x = w.getPlayerX();
+    	int y = w.getPlayerY();
+    	
+    	if(gotArrow)
+    	{
+    		handler.sendMessage(Message.obtain(handler, 11));
+    		gotArrow =false ;
+    		if(l==2)
+			{
+				if (x-1>=0)
+				{
+					if(w.getId(x-1, y) ==3)
+					{
+						handler.sendMessage(Message.obtain(handler, 8));
+						gotWumpus = false ;
+				    	singlesquare[x-1][y]= new WumpusEmpty((x-1)*xss, y*yss);
+				    	w.setMonster(-1, -1);
+//TODO
+					}
+				}
+				
+			}
+    		else if(l==1)
+    		{
+    			if(y+1<w.getSize())
+    			{
+    				if(w.getId(x,y+1) ==3)
+					{
+    					handler.sendMessage(Message.obtain(handler, 8));
+						gotWumpus = false ;
+				    	singlesquare[x][y+1]= new WumpusEmpty(x*xss, (y+1)*yss);
+				    	w.setMonster(-1, -1);
+					}
+    			}
+    			
+    		}
+    		else if(l==-1)
+    		{
+    			if(y-1>=0)
+    			{
+    				if(w.getId(x,y-1) ==3)
+					{
+						handler.sendMessage(Message.obtain(handler, 8));
+						gotWumpus = false ;
+						singlesquare[x][y-1]= new WumpusEmpty(x*xss, (y-1)*yss);
+				    	w.setMonster(-1, -1);
+					}
+    			}
+    			
+    		}
+    		else if(l==0)
+    		{
+    			if(x+1<w.getSize())
+    			{
+    				if(w.getId(x+1,y) ==3)
+					{
+						handler.sendMessage(Message.obtain(handler, 8));
+						gotWumpus = false ;
+						singlesquare[x+1][y]= new WumpusEmpty((x+1)*xss, y*yss);
+				    	w.setMonster(-1, -1);
+					}
+    			}
+    		}
+    		
+    		
+    		
+    		if(gotWumpus)
+    		{
+    			handler.sendMessage(Message.obtain(handler, 9));
+    		}
+    	}
+    	else
+    	{
+    		Log.i("soz pal", "no arrow");
+    	}
+    	
+    	handler.sendMessage(Message.obtain(handler, 0));
+		//TODO 
+	}
+    public int whatWasBeforeLanding(int x,int y)
+    {
     	return  singlesquare[x][y].Drawable();
     }
-    public void moveUp(){
+    public void moveUp()
+    {
     	if(w.getLooking()==2)
     	{
     		move();
@@ -644,7 +757,8 @@ public class WumpusGame extends View {
     		move();
     	}
     }
-    public void moveLeft(){
+    public void moveLeft()
+    {
     	if(w.getLooking()==-1)
     	{
     		move();
@@ -687,6 +801,97 @@ public class WumpusGame extends View {
     	{
     		rotateLeft();
     		move();
+    	}
+    }
+    public void shootUp()
+    {
+    	if(w.getLooking()==2)
+    	{
+    		shoot();
+    	}
+    	else if(w.getLooking()==1)
+    	{
+    		rotateLeft();
+    		shoot();
+    	}
+    	else if(w.getLooking()==-1)
+    	{
+    		rotateRight();
+    		shoot();
+    	}
+    	else if(w.getLooking()==0){
+    		rotateRight();
+    		rotateRight();
+    		shoot();
+    	}
+    }
+    public void shootRight()
+    {
+    	if(w.getLooking()==2)
+    	{
+    		rotateRight();
+    		shoot();
+    	}
+    	else if(w.getLooking()==1)
+    	{
+    		shoot();
+    	}
+    	else if(w.getLooking()==0)
+    	{
+    		rotateLeft();
+    		shoot();
+    	}
+    	else if(w.getLooking()==-1)
+    	{
+    		rotateLeft();
+    		rotateLeft();
+    		shoot();
+    	}
+    }
+    public void shootLeft()
+    {
+    	if(w.getLooking()==-1)
+    	{
+    		shoot();
+    	}
+    	else if(w.getLooking()==2)
+    	{
+    		rotateLeft();
+    		shoot();
+    	}
+    	else if(w.getLooking()==1)
+    	{
+    		rotateLeft();
+    		rotateLeft();
+    		shoot();
+    	}
+    	else if(w.getLooking()==0)
+    	{
+    		rotateRight();
+    		shoot();
+    	}
+    }
+    public void shootDown()
+    {
+    	if(w.getLooking()==0)
+    	{
+    		shoot();
+    	}
+    	else if(w.getLooking()==1)
+    	{
+    		rotateRight();
+    		shoot();
+    	}
+    	else if(w.getLooking()==2)
+    	{
+    		rotateRight();
+    		rotateRight();
+    		shoot();
+    	}
+    	else if(w.getLooking()==-1)
+    	{
+    		rotateLeft();
+    		shoot();
     	}
     }
 	

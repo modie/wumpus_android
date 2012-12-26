@@ -12,6 +12,7 @@ public class WumpusAgent
 	protected int size ;
 	WumpusRoom [][]r ;
 	int couldright , couldleft,couldup,coulddown ,returnback;
+	int shootright ,shootleft, shootup , shootdown ;
 	int choice ;
 	// 2 for up , 1 for right , -1 for left, 0 for down 
 	public Point getLocation()
@@ -224,7 +225,7 @@ public class WumpusAgent
 	//looking for pit at 400 
 	protected void updateField()
 	{
-		
+		wumpusalive = WumpusGame.gotWumpus ;
 		WumpusRoom left ,right , up , down,current,upleft,upright,downright,downleft ;
 		left = getLeftRoom(location);
 		right = getRightRoom(location);
@@ -240,42 +241,211 @@ public class WumpusAgent
 		if(wumpusalive)
 		{
 			//TODO code for wumpus
-			/*
 			if(current.isBlood())
 			{
-				if(!up.isWumpus() && !down.isWumpus()
-						&& !left.isWumpus())
-				{
-					right.setWumpus(true);
+				
+				if(up!=null ){
+					if(upleft!=null){
+						if(upleft.isBlood() && left.isVisited())
+						{
+							up.setWumpus(true);
+							
+						}
+						if(upleft.isBlood() && up.isVisited())
+						{
+							left.setWumpus(true);
+						}
+					}
+					else //if upleft == null -> left == null -> downleft == null
+					{
+						if(upright.isBlood() && downright.isBlood())
+						{
+							right.setWumpus(true);
+						}
+						else if(upright.isBlood())//goes there if downright is not Blood 
+						{
+							up.setWumpus(true);
+						}
+						else // if upright is not Blood,then downright has to be :D
+						{
+							down.setWumpus(true);
+						}
+					}
+					if(upright!=null){
+						if(upright.isBlood() && up.isVisited())
+						{
+							right.setWumpus(true);
+						}
+						if(upright.isBlood() && right.isVisited())
+						{
+							up.setWumpus(true);
+						}
+					}
+					else//if upright ==null
+					{
+						if(down!=null)
+						{
+							if(upleft.isBlood() && downleft.isBlood())
+							{
+								left.setWumpus(true);
+							}
+							else if(upleft.isBlood())
+							{
+								up.setWumpus(true);
+							}
+							else
+							{
+								down.setWumpus(true);
+							}
+						}
+						else
+						{
+							if(upleft.isBlood() && up.isVisited())
+							{
+								left.setWumpus(true);
+							}
+							else if(upleft.isBlood() && left.isVisited())
+							{
+								up.setWumpus(true);
+							}
+						}
+					}
 				}
-				else if( !up.isWumpus() && !down.isWumpus()
-						&& !right.isWumpus())
-				{
-					left.setWumpus(true);
+				else //if up == null
+				{ 
+					if(downleft!=null)
+					{
+						if(downleft.isBlood())
+						{
+							left.setWumpus(true);
+						}
+					}
+					else if(downright!=null)
+					{
+						if(downright.isBlood())
+						{
+							right.setWumpus(true);
+						}
+					}
 				}
-				else if( !up.isWumpus() && !right.isWumpus() 
-						&& !left.isWumpus())
+				if(down!=null)
 				{
-					down.setWumpus(true);
+					if(downleft!=null){
+						
+						if(downleft.isBlood() && down.isVisited())
+						{
+							left.setWumpus(true);
+						}
+						if(downleft.isBlood() && left.isVisited())
+						{
+							down.setWumpus(true);
+						}
+					}
+					else // if downleft == null and down not null -> left =null -> upleft ==null
+					{
+						if(downright.isBlood() && upright.isBlood())
+						{
+							right.setWumpus(true);
+						}
+						else if(downright.isBlood())//goes there if upright is not Blood
+						{
+							down.setWumpus(true);
+						}
+						else 
+						{
+							up.setWumpus(true);
+						}
+					}
+					if(downright!=null){
+						if(downright.isBlood() && down.isVisited())
+						{
+							right.setWumpus(true);
+						}
+						if(downright.isBlood() && right.isVisited())
+						{
+							down.setWumpus(true);
+						}
+					}
+					else //if downright ==null
+					{
+						
+						if(downleft.isBlood() && upleft.isBlood())
+						{
+							left.setWumpus(true);
+						}
+						else if(upleft.isBlood())
+						{
+							up.setWumpus(true);
+						}
+						else 
+						{
+							down.setWumpus(true);
+						}
+					}
+					
 				}
-				else if( !down.isWumpus() && !right.isWumpus()
-						&& !left.isWumpus())
+				else // down == null  
 				{
-					up.setWumpus(true);
+					if(upleft!=null)
+					{
+						if(upleft.isBlood())
+						{
+							left.setWumpus(true);
+						}
+					}
+					else if(upright!=null)
+					{
+						if(upright.isBlood())
+						{
+							right.setWumpus(true);
+						}
+					}
+					else
+					{
+						if(right!=null)
+						{
+						right.setMaybewumpus(true);
+						}
+					}
+					
 				}
+				if(up!=null)
+					if(up.getNumberofvisits()==0)
+						up.setMaybewumpus(true);
+				if(down!=null)
+					if(down.getNumberofvisits()==0)
+						down.setMaybewumpus(true);
+				if(left!=null)
+					if(left.getNumberofvisits()==0)
+						left.setMaybewumpus(true);
+				if(right!=null)
+					if(right.getNumberofvisits()==0)
+						right.setMaybewumpus(true);
 			}
-			else //if no blood
+			else//if no blood,then no wumpus near
 			{
 				if(up!=null)
+				{
+					
 					up.setWumpus(false);
+					up.setMaybewumpus(false);
+				}
 				if(down!=null)
-				down.setWumpus(false);
+				{
+					down.setWumpus(false);
+					down.setMaybewumpus(false);
+				}
 				if(left!=null)
-				left.setWumpus(false);
+				{
+					left.setMaybewumpus(false);
+					left.setWumpus(false);
+				}
 				if(right!=null)
-				right.setWumpus(false);
+				{
+					right.setWumpus(false);
+					right.setMaybewumpus(false);
+				}
 			}
-			*/
 		}
 		if(current.isAura())//checkin for pit 
 		{
@@ -484,6 +654,7 @@ public class WumpusAgent
 		{
 			if(up!=null)
 			{
+				
 				up.setPit(false);
 				up.setMaybepit(false);
 			}
@@ -519,7 +690,8 @@ public class WumpusAgent
 				{
 					r[i][j].setPit(false);
 					r[i][j].setMaybepit(false);
-					
+					r[i][j].setWumpus(false);
+					r[i][j].setMaybewumpus(false);
 				}
 				if(r[i][j].isVisited() && !r[i][j].isAura())
 				{
@@ -544,6 +716,34 @@ public class WumpusAgent
 						r[i][j+1].setPit(false);
 					}
 				}
+				if(r[i][j].isVisited() && !r[i][j].isBlood())
+				{
+					if(i-1 >= 0)
+					{
+						r[i-1][j].setMaybewumpus(false);
+						r[i-1][j].setWumpus(false);
+					}
+					if(i+1< size)
+					{
+						r[i+1][j].setMaybewumpus(false);
+						r[i+1][j].setWumpus(false);
+					}
+					if(j-1 >= 0)
+					{
+						r[i][j-1].setMaybewumpus(false);
+						r[i][j-1].setWumpus(false);
+					}
+					if(j+1 < size)
+					{
+						r[i][j+1].setMaybewumpus(false);
+						r[i][j+1].setWumpus(false);
+					}
+				}
+				if(!wumpusalive)
+				{
+					r[i][j].setWumpus(false);
+					r[i][j].setMaybewumpus(false);
+				}
 			}
 		}
 		
@@ -551,6 +751,7 @@ public class WumpusAgent
 	protected int possibleMoves()// = reason ,line 454 
 	{
 		WumpusRoom left, right ,up,down ;
+		shootright = shootleft =shootup = shootdown = -400 ;
 		couldright = -200 ;
 		couldup = -200 ;
 		coulddown = -200 ;
@@ -573,13 +774,17 @@ public class WumpusAgent
 			{
 				couldright = 20-right.getNumberofvisits() ;
 			}
-			if(right.isMaybepit() && !right.isVisited())
+			if((right.isMaybepit() || right.isMaybewumpus() ) && !right.isVisited())
 			{
 				couldright = 10 ;
 			}
 			if (right.isWumpus() || right.isPit())
 			{
 				couldright = -1 ;
+			}
+			if(right.isWumpus())
+			{
+				shootright = 1000;
 			}
 		}
 		else {
@@ -597,7 +802,7 @@ public class WumpusAgent
 			{
 				couldleft = 20-left.getNumberofvisits() ;
 			}
-			if(left.isMaybepit() && !left.isVisited())
+			if((left.isMaybepit() || left.isMaybewumpus() )&& !left.isVisited())
 			{
 				
 				couldleft = 10 ;
@@ -605,6 +810,10 @@ public class WumpusAgent
 			if (left.isWumpus() || left.isPit())
 			{
 				couldleft = -1 ;
+			}
+			if(left.isWumpus())
+			{
+				shootleft = 1000;
 			}
 		}
 		else 
@@ -623,13 +832,17 @@ public class WumpusAgent
 			{
 				couldup = 20-up.getNumberofvisits() ;
 			}
-			if(up.isMaybepit() && !up.isVisited())
+			if((up.isMaybepit() || up.isMaybewumpus() )&& !up.isVisited())
 			{
 				couldup = 10 ;
 			}
 			if (up.isWumpus() || up.isPit())
 			{
 				couldup = -1 ;
+			}
+			if(up.isWumpus())
+			{
+				shootup = 1000;
 			}
 		}
 		else 
@@ -648,27 +861,32 @@ public class WumpusAgent
 			{
 				coulddown = 20-down.getNumberofvisits() ;
 			}
-			if(down.isMaybepit() && !down.isVisited())
+			if((down.isMaybepit() || down.isMaybewumpus() )&& !down.isVisited())
 			{
 				coulddown = 10 ;
 			}
 			
-			else if (down.isWumpus() || down.isPit())
+			if (down.isWumpus() || down.isPit())
 			{
 				coulddown = -1 ;
 			}
+			if(down.isWumpus())
+			{
+				shootdown = 1000;
+			}
+			
 		}
 		else
 		{
 			coulddown = -100;
 		}
 		
-		return getMove(couldright,couldup,couldleft,coulddown);
+		return getMove(couldright,couldup,couldleft,coulddown,shootright,shootup,shootleft,shootdown);
 		
 		//return getMove(z) ;
 		
 	}
-	private int getMove( int right, int up, int left, int down )
+	private int getMove( int right, int up, int left, int down ,int sright,int sup,int sleft,int sdown)
 	{
 		/*TODO add random  for movement if they are the same :D
 		 * after tests are complete :D
@@ -726,7 +944,23 @@ public class WumpusAgent
 			choice = 1 ;
 			
 		}
-		Log.e("yaw", "choice is "+choice);
+		if(sright==1000)
+		{
+			choice = 11 ;
+		}
+		else if(sleft ==1000)
+		{
+			choice = -11;
+		}
+		else if(sup==1000)
+		{
+			choice = 12 ;
+		}
+		else if(sdown==1000)
+		{
+			choice = 10 ;
+		}
+		//Log.e("yaw", "choice is "+choice);
 		return choice;
 	}
 	public int getMove(int choice)
